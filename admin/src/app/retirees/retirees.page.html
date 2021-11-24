@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="light"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>Logîs</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size-xs='12' size-sm='4' *ngFor="let annonce of annonces">
+        <ion-card mode="ios">
+          <ion-row>
+            <ion-col size="12">
+              <img src='/assets/imo2.jpg'>
+
+            </ion-col>
+
+            <ion-col class="lateral" size="12">
+              <div>
+                <div class="flex">
+                  <div class="cl">
+                    <h2>{{annonce.type}}</h2>
+                  </div>
+
+                </div>
+
+                <div class="descrip">
+                  <p>{{annonce.titre}}</p>
+                  <p>Reference: {{annonce.numeroRef}}</p>
+                  <p>Tel: {{annonce.numeroAgentImmobilier}}</p>
+                </div>
+
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="6">
+              <ion-button expand='block' (click)="supprimer(annonce)">
+                Suprimer
+              </ion-button>
+            </ion-col>
+            <ion-col size="6">
+              <ion-button expand='block' color="danger" (click)="repub(annonce)">
+                Républier
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

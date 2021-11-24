@@ -1,0 +1,168 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="light"></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>publication</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item-divider color='primary'>Type de local</ion-item-divider>
+    <ion-item>
+      <ion-label position='floating'>Choisir</ion-label>
+      <ion-select [(ngModel)]="logis.type">
+        <ion-select-option [value]="item.type" *ngFor="let item of local">{{item.type}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item-divider color='primary'>Titre</ion-item-divider>
+    <ion-item>
+      <ion-label position='floating'>Saisir </ion-label>
+      <ion-input [(ngModel)]="logis.titre" type="text"></ion-input>
+    </ion-item>
+
+    <div>
+      <!-- champs à afficher s'il s'agit d'Appartement -->
+      <div class="appart" *ngIf="logis.type==='Appartement Meublé'">
+        <ion-item>
+          <ion-label position='floating'>Nombre de chambre</ion-label>
+          <ion-input [(ngModel)]="logis.nombreChambre" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position='floating'>Nombre de sallons</ion-label>
+          <ion-input [(ngModel)]="logis.nombreSallon" type="number"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="appart" *ngIf="logis.type==='Appartement Non Meublé'">
+        <ion-item>
+          <ion-label position='floating'>Nombre de chambre</ion-label>
+          <ion-input [(ngModel)]="logis.nombreChambre" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position='floating'>Nombre de sallons</ion-label>
+          <ion-input [(ngModel)]="logis.nombreSallon" type="number"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="appart" *ngIf="logis.type==='Villa'">
+        <ion-item>
+          <ion-label position='floating'>Nombre de chambre</ion-label>
+          <ion-input [(ngModel)]="logis.nombreChambre" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position='floating'>Nombre de sallons</ion-label>
+          <ion-input [(ngModel)]="logis.nombreSallon" type="number"></ion-input>
+        </ion-item>
+      </div>
+    </div>
+
+    <div>
+      <!-- champs à afficher s'il s'agit de magasin -->
+      <div class="magasin" *ngIf="logis.type==='Magasin'">
+        <ion-item>
+          <ion-label position='floating'>Longueur</ion-label>
+          <ion-input [(ngModel)]="logis.longueur" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position='floating'>Langeur</ion-label>
+          <ion-input [(ngModel)]="logis.largeur" type="number"></ion-input>
+        </ion-item>
+      </div>
+    </div>
+
+
+  <ion-item-divider color='primary'>Details</ion-item-divider>
+
+    <ion-item>
+      <ion-label position='floating'>Quartier</ion-label>
+      <ion-select [(ngModel)]="logis.quartier">
+        <ion-select-option [value]="item.type" *ngFor="let item of quartiers">{{item.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position='floating'>Prix en fcfa</ion-label>
+      <ion-input [(ngModel)]="logis.prix" type="number"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position='floating'>Forme d'offre</ion-label>
+        <ion-select [(ngModel)]="logis.formeOffre">
+        <ion-select-option>Mois</ion-select-option>
+        <ion-select-option>Jour</ion-select-option>
+        <ion-select-option>Heure</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <div>
+      <!-- champs à afficher s'il s'agit d'Appartement Meublé -->
+    <div *ngIf="logis.type==='Appartement Meublé'">
+
+      <ion-item-divider color='primary'>Commodites</ion-item-divider>
+
+      <ion-item *ngFor="let commode of commodites">
+        <ion-label>{{commode.val}}</ion-label>
+        <ion-checkbox slot="end" [(ngModel)]="commode.isChecked"></ion-checkbox>
+      </ion-item>
+
+      <ion-item-divider color='primary'>Service</ion-item-divider>
+      <ion-item *ngFor="let service of service">
+        <ion-label>{{service.val}}</ion-label>
+        <ion-checkbox slot="end" [(ngModel)]="service.isChecked"></ion-checkbox>
+      </ion-item>
+
+    </div>
+
+    <!-- champs à afficher s'il s'agit d'Appartement Meublé -->
+    <div *ngIf="logis.type==='Villa'">
+
+      <ion-item-divider color='primary'>Commodites</ion-item-divider>
+
+      <ion-item *ngFor="let commode of commodites">
+        <ion-label>{{commode.val}}</ion-label>
+        <ion-checkbox slot="end" [(ngModel)]="commode.isChecked"></ion-checkbox>
+      </ion-item>
+
+      <ion-item-divider color='primary'>Service</ion-item-divider>
+      <ion-item *ngFor="let service of service">
+        <ion-label>{{service.val}}</ion-label>
+        <ion-checkbox slot="end" [(ngModel)]="service.isChecked"></ion-checkbox>
+      </ion-item>
+
+    </div>
+    </div>
+
+    <ion-item-divider color='primary'>Description</ion-item-divider>
+    <ion-card>
+      <ion-textarea [(ngModel)]="logis.description" placeholder="Saisir"></ion-textarea>
+    </ion-card>
+
+    <ion-item-divider color='primary'>Conditions</ion-item-divider>
+    <ion-card>
+      <ion-textarea [(ngModel)]="logis.condition" placeholder="Saisir"></ion-textarea>
+    </ion-card>
+
+    <ion-item-divider color='primary'>Support</ion-item-divider>
+    <ion-item>
+      <ion-label position='floating'>Numero agent immobilier</ion-label>
+      <ion-input [(ngModel)]="logis.numeroAgentImmobilier" type="number"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position='floating'>Numero agent logis</ion-label>
+      <ion-input [(ngModel)]="logis.numeroAgentLogis" type="number"></ion-input>
+    </ion-item>
+
+    <ion-button (click)="onClick()" expand="block">
+      Ajouter des images
+    </ion-button><br>
+    <ion-button (click)="publier()" expand="block">
+      Publier
+    </ion-button>
+</ion-content>

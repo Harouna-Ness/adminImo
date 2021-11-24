@@ -1,0 +1,205 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons (click)="retour()" slot="start">
+      <ion-button class="ic">
+        <ion-icon color="light" name="arrow-back-sharp"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>{{annonces.type}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [scrollEvents]="true" (ionScroll)="scroll($event)">
+
+  <ion-card class="slide">
+    <ion-slides mode="ios" scrollbar="ios" [options]="slideOpts">
+
+      <ion-slide *ngFor="let img of annonces.image">
+        <img [src]="img"/>
+      </ion-slide>
+
+    </ion-slides>
+  </ion-card>
+
+  <ion-button expand='block' (click)="presentAlert(annonces)">
+    Supprimer
+  </ion-button><br>
+
+  <ion-card class="detail">
+    <h3>Detail</h3>
+
+    <div>
+      <!-- champs à afficher s'il s'agit d'Appartement -->
+      <div class="appart" *ngIf="annonces.type==='Appartement Meublé'">
+        <ion-item>
+          <ion-label position='floating'>Nombre de chambre</ion-label>
+          <ion-input [(ngModel)]="annonces.nombreChambre" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position='floating'>Nombre de sallons</ion-label>
+          <ion-input [(ngModel)]="annonces.nombreSallon" type="number"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="appart" *ngIf="annonces.type==='Appartement Non Meublé'">
+        <ion-item>
+          <ion-label position='floating'>Nombre de chambre</ion-label>
+          <ion-input [(ngModel)]="annonces.nombreChambre" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position='floating'>Nombre de sallons</ion-label>
+          <ion-input [(ngModel)]="annonces.nombreSallon" type="number"></ion-input>
+        </ion-item>
+      </div>
+
+      <div class="appart" *ngIf="annonces.type==='Villa'">
+        <ion-item>
+          <ion-label position='floating'>Nombre de chambre</ion-label>
+          <ion-input [(ngModel)]="annonces.nombreChambre" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position='floating'>Nombre de sallons</ion-label>
+          <ion-input [(ngModel)]="annonces.nombreSallon" type="number"></ion-input>
+        </ion-item>
+      </div>
+
+    </div>
+
+    <div>
+      <!-- champs à afficher s'il s'agit de magasin -->
+      <div class="magasin" *ngIf="annonces.type==='Magasin'">
+        <ion-item>
+          <ion-label position='floating'>Longueur</ion-label>
+          <ion-input [(ngModel)]="annonces.longueur" type="number"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position='floating'>Langeur</ion-label>
+          <ion-input [(ngModel)]="annonces.largeur"  type="number"></ion-input>
+        </ion-item>
+      </div>
+    </div>
+
+  </ion-card>
+  <ion-button *ngIf="annonces.type!=='Magasin'" (click)="chaSal(annonces.nombreChambre, annonces.nombreSallon)">
+    Valider
+  </ion-button>
+  <ion-button *ngIf="annonces.type==='Magasin'" (click)="dimension(annonces.longueur, annonces.largeur)">
+    Valider
+  </ion-button><br>
+
+  <ion-card class="detail">
+    <h3>Description</h3>
+
+    <ion-textarea [(ngModel)]="annonces.description" placeholder="Saisir"></ion-textarea>
+    <!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis voluptate magni excepturi molestiae officiis. Illum repellat saepe quisquam! Porro quis laboriosam quam odio deserunt quaerat aut pariatur provident doloremque blanditiis!</p> -->
+  </ion-card>
+  <ion-button (click)="valider(annonces.description)">
+    Valider
+  </ion-button><br>
+
+  <ion-card class="detail">
+    <h3>Condition</h3>
+
+    <ion-textarea [(ngModel)]="annonces.condition" placeholder="Saisir"></ion-textarea>
+
+  </ion-card>
+  <ion-button (click)="validerC(annonces.condition)">
+    Valider
+  </ion-button><br>
+
+  <ion-card class="detail">
+    <h3>Prix-forme d'offre</h3>
+
+    <ion-item>
+      <ion-label position='floating'>prix</ion-label>
+      <ion-input [(ngModel)]="annonces.prix" type="number"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position='floating'>Forme d'offre</ion-label>
+        <ion-select [(ngModel)]="annonces.formeOffre">
+        <ion-select-option>Mois</ion-select-option>
+        <ion-select-option>Jour</ion-select-option>
+        <ion-select-option>Heure</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-card>
+  <ion-button (click)="validerP(annonces.prix, annonces.formeOffre)">
+    Valider
+  </ion-button><br>
+
+  <ion-card class="detail">
+    <h3>Référence</h3>
+
+    <p>{{annonces.numeroRef}}</p>
+
+  </ion-card><br>
+
+  <div *ngIf="annonces.type==='Appartement Meublé'">
+    <div *ngIf="!see1">
+      <ion-card class="detail">
+        <h3>Commodités populaires</h3>
+
+        <p>{{annonces.commodites}}</p>
+
+      </ion-card>
+      <ion-button (click)="Reselectionner()">Réselectionner</ion-button>
+      <br>
+    </div>
+
+    <div *ngIf="see1">
+      <ion-card class="detail">
+        <h3>Commodités populaires</h3>
+        <ion-item *ngFor="let commode of commodites">
+          <ion-label>{{commode.val}}</ion-label>
+          <ion-checkbox slot="end" [(ngModel)]="commode.isChecked"></ion-checkbox>
+        </ion-item>
+      </ion-card>
+      <ion-button (click)="annulerCommode()">
+        Annuler
+      </ion-button>
+      <ion-button (click)="choisirCommode()">
+        Valider
+      </ion-button><br>
+    </div>
+
+    <div *ngIf="!see2">
+      <ion-card class="detail">
+        <h3>Service</h3>
+
+        <p>{{annonces.service}}</p>
+
+      </ion-card>
+      <ion-button (click)="Reselectionner1()">Réselectionner</ion-button>
+      <br>
+    </div>
+
+    <div *ngIf="see2">
+      <ion-card class="detail">
+        <h3>Service</h3>
+        <ion-item *ngFor="let service of service">
+          <ion-label>{{service.val}}</ion-label>
+          <ion-checkbox slot="end" [(ngModel)]="service.isChecked"></ion-checkbox>
+        </ion-item>
+      </ion-card>
+      <ion-button (click)="annulerSEr()">
+        Annuler
+      </ion-button>
+      <ion-button (click)="choisirService()">
+        Valider
+      </ion-button><br><br>
+    </div>
+  </div>
+
+  <div [class]="opacity">
+    <ion-button (click)="top()">
+      <ion-icon slot="icon-only" name="chevron-up-circle-outline"></ion-icon>
+    </ion-button>
+  </div>
+</ion-content>

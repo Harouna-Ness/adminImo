@@ -1,0 +1,7 @@
+{
+  "name": "logisadmin",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

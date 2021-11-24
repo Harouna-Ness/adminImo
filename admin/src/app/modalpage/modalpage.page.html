@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons (click)="close()" slot="end">
+      <ion-button color="primary" class="ic">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Recherche</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content">
+    <!-- <h2>Type de local</h2>
+    <ion-card>
+      <ion-item lines='none'>
+          <ion-select [(ngModel)]="type" placeholder="Selectionnez">
+            <ion-select-option>Villas</ion-select-option>
+            <ion-select-option>Appatements meubles</ion-select-option>
+            <ion-select-option>Appatements non meubles</ion-select-option>
+            <ion-select-option>Magasins</ion-select-option>
+          </ion-select>
+      </ion-item>
+    </ion-card> -->
+
+
+    <h2>Reference</h2>
+    <ion-card>
+      <ion-item lines='none'>
+        <ion-input [(ngModel)]="Reference" type="number" placeholder="saisir" position="floating"></ion-input>
+      </ion-item>
+    </ion-card><br>
+
+    <ion-button mode=ios (click)="chercher()" expand="block" shape="round" color="dark">
+      Chercher
+    </ion-button>
+  </div>
+
+</ion-content>

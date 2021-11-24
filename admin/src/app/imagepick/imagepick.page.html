@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>imagepick</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item *ngFor="let entry of form">
+      <ion-label>{{entry.val}}</ion-label>
+      <ion-checkbox slot="end" [(ngModel)]="entry.isChecked"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+  <ion-button (click)="onClick()" expand="block" fill="clear" shape="round">
+    Click me
+  </ion-button>
+  <ion-button (click)="Click()" expand="block" fill="clear" shape="round">
+    Click me
+  </ion-button>
+
+ <ion-button (click)="getImage()" expand="block" shape="round">
+  pick image
+ </ion-button>
+ <br>
+
+ <h2 *ngIf="images">images</h2>
+ <div *ngIf="images">
+  <div *ngFor="let image of images">
+    <img [src]="image" alt="">
+   </div>
+ </div>
+
+ <ion-grid>
+  <ion-row>
+    <ion-col text-center>
+      <ion-button (click)="imagePicker()">Select Images</ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <div class="images-wrapper">
+        <div class="pick-single-image" *ngFor="let image of imgRes">
+          <img [src]="image" alt="" srcset="">
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+</ion-content>
