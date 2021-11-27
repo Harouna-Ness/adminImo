@@ -159,10 +159,18 @@
       <ion-input [(ngModel)]="logis.numeroAgentLogis" type="number"></ion-input>
     </ion-item>
 
-    <ion-button (click)="onClick()" expand="block">
+    <ion-button (click)="checkImages()" expand="block">
       Ajouter des images
     </ion-button><br>
     <ion-button (click)="publier()" expand="block">
       Publier
     </ion-button>
 </ion-content>
+
+<ion-footer *ngIf="imageArray && imageArray.length > 0">
+  <ion-toolbar>
+    <ion-item style="display: inline-table;" *ngFor="let im of imageArray; let i = index">
+      <img  style="height: 40px; width: 40px;"   [src]="im.img">
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

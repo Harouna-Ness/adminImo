@@ -7,11 +7,11 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-// import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDRgmqmxyFBSGkgLLMO2SWuInfba6o1iXg",
@@ -32,9 +32,8 @@ const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFireStorageModule,
-
   ],
-  providers: [ImagePicker, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [ImagePicker, Base64, { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
