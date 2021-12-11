@@ -14,12 +14,12 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDRgmqmxyFBSGkgLLMO2SWuInfba6o1iXg",
-  authDomain: "busness-4d219.firebaseapp.com",
-  projectId: "busness-4d219",
-  storageBucket: "busness-4d219.appspot.com",
-  messagingSenderId: "310343438580",
-  appId: "1:310343438580:web:2906ce832ad70ed8774ea1"
+  apiKey: "AIzaSyCa4ZsLas3zFv2FLmJ5md-rl6wqoOJJJnc",
+  authDomain: "logis-e3b0a.firebaseapp.com",
+  projectId: "logis-e3b0a",
+  storageBucket: "logis-e3b0a.appspot.com",
+  messagingSenderId: "846980889918",
+  appId: "1:846980889918:web:944429275260fec8bcc06f"
 };
 
 @NgModule({

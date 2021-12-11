@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>créer</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-list>
+      <ion-list-header>
+        <ion-label><b>Catégories</b></ion-label>
+        <ion-button *ngIf="categorie==false" (click)="seeCat()">Tout voir</ion-button>
+        <ion-button *ngIf="categorie==true" (click)="inputCat()">Ajouter</ion-button>
+        <ion-button *ngIf="categorie==true" (click)="seeCat()">Fermer</ion-button>
+      </ion-list-header>
+
+      <ion-item *ngIf="categorie==true && catInput==true">
+        <ion-input [(ngModel)]="catName" type="text" placeholder="Ecrire"></ion-input>
+        <ion-button (click)="addCat()">Valider</ion-button>
+      </ion-item>
+
+      <ion-item *ngIf="categorie==true" lines="none">
+        <ion-label>Awesome Label</ion-label>
+      </ion-item>
+
+    </ion-list>
+  </ion-card>
+
+  <ion-card>
+    <ion-list>
+      <ion-list-header>
+        <ion-label><b>Quartiers</b></ion-label>
+        <ion-button *ngIf="quartier==false" (click)="seeQuart()">Tout voir</ion-button>
+        <ion-button *ngIf="quartier==true" (click)="inputQuart()">Ajouter</ion-button>
+        <ion-button *ngIf="quartier==true" (click)="seeQuart()">Fermer</ion-button>
+      </ion-list-header>
+
+      <ion-item *ngIf="quartier==true && quartInput==true">
+        <ion-input [(ngModel)]="quartName" type="text" placeholder="Ecrire"></ion-input>
+        <ion-button (click)="addQuart()">Valider</ion-button>
+      </ion-item>
+
+      <ion-item *ngIf="quartier==true" lines="none">
+        <ion-label>Awesome Label</ion-label>
+      </ion-item>
+
+    </ion-list>
+  </ion-card>
+
+  <ion-card>
+    <ion-list>
+      <ion-list-header>
+        <ion-label><b>Commodités</b></ion-label>
+        <ion-button *ngIf="commodite==false" (click)="seeCommo()">Tout voir</ion-button>
+        <ion-button *ngIf="commodite==true" (click)="inputCommo()">Ajouter</ion-button>
+        <ion-button *ngIf="commodite==true" (click)="seeCommo()">Fermer</ion-button>
+      </ion-list-header>
+
+      <ion-item *ngIf="commodite==true && commoInput==true">
+        <ion-input [(ngModel)]="commoName" type="text" placeholder="Ecrire"></ion-input>
+        <ion-button (click)="addCommo()">Valider</ion-button>
+      </ion-item>
+
+      <ion-item *ngIf="commodite==true" lines="none">
+        <ion-label>Awesome Label</ion-label>
+      </ion-item>
+
+    </ion-list>
+  </ion-card>
+
+  <ion-card>
+    <ion-list>
+      <ion-list-header>
+        <ion-label><b>Services</b></ion-label>
+        <ion-button *ngIf="service==false" (click)="seeServi()">Tout voir</ion-button>
+        <ion-button *ngIf="service==true" (click)="inputServi()">Ajouter</ion-button>
+        <ion-button *ngIf="service==true" (click)="seeServi()">Fermer</ion-button>
+      </ion-list-header>
+
+      <ion-item *ngIf="service==true && servInput==true">
+        <ion-input [(ngModel)]="servName" type="text" placeholder="Ecrire"></ion-input>
+        <ion-button (click)="addServi()">Valider</ion-button>
+      </ion-item>
+
+      <ion-item *ngIf="service==true" lines="none">
+        <ion-label>Awesome Label</ion-label>
+      </ion-item>
+
+    </ion-list>
+  </ion-card>
+  <!-- <ion-card (click)="onClick()">
+    <ion-item button>
+      <ion-label>Quartiers</ion-label>
+    </ion-item>
+  </ion-card>
+  <ion-card>
+    <ion-item>
+      <ion-label>Commodités</ion-label>
+    </ion-item>
+  </ion-card>
+  <ion-card>
+    <ion-item>
+      <ion-label>services</ion-label>
+    </ion-item>
+  </ion-card> -->
+</ion-content>

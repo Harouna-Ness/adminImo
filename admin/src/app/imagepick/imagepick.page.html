@@ -6,7 +6,25 @@
 
 <ion-content>
 
-  <ion-list>
+  <ion-button (click)="voirLblob()" expand="block" fill="clear" shape="round">
+    see blob
+  </ion-button>
+  <ion-item>
+    <ion-input type="file" (change)="getFile($event)"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input type="file" (change)="getFile($event)"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input type="file" (change)="getFile($event)"></ion-input>
+  </ion-item>
+
+  <div *ngFor="let item of iMage">
+    <img [src]="item" alt="im">
+  </div>
+  <ion-button (click)="publier()">publier</ion-button>
+
+  <!-- <ion-list>
     <ion-item *ngFor="let entry of form">
       <ion-label>{{entry.val}}</ion-label>
       <ion-checkbox slot="end" [(ngModel)]="entry.isChecked"></ion-checkbox>
@@ -22,7 +40,7 @@
  <ion-button (click)="getImage()" expand="block" shape="round">
   pick image
  </ion-button>
- <br>
+ <br> -->
 
  <h2 *ngIf="images">images</h2>
  <div *ngIf="images">

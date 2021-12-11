@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import {ImagePicker, ImagePickerOptions} from "@ionic-native/image-picker/ngx";
 import {Base64} from "@ionic-native/base64/ngx";
+import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-publication',
@@ -15,6 +16,8 @@ export class PublicationPage implements OnInit {
 
   ref: Date = new Date;
   data: any;
+  imageBLOB: any[] = [];
+  imageBLOBpath: any[] = [];
   logis: Logis = new Logis;
   local: any[] = [
     {
@@ -65,7 +68,8 @@ export class PublicationPage implements OnInit {
     private alertCtrl: AlertController,
     private router: Router,
     private imagePicker: ImagePicker,
-    private base64: Base64
+    private base64: Base64,
+    private afsg: AngularFireStorage
     ) { }
 
   choisirCommode() {
@@ -101,9 +105,31 @@ export class PublicationPage implements OnInit {
   }
 
   publier() {
+    let name = 'image/'+ new Date().getTime() + '.jpg';
     this.presentLoading();
     this.liaison();
     this.data=JSON.parse(localStorage.getItem('stok'));
+
+    //storage
+    if (this.imageBLOB.length > 0) {
+      // for (let i = 0; i < this.imageBLOB.length; i++) {
+      //   this.afsg.ref(name).put(this.imageBLOB[i]).then(()=> {
+      //     this.afsg.ref(name).getDownloadURL().subscribe((pathImg) => {
+      //       this.imageBLOBpath.push({
+      //         path: pathImg
+      //       });
+      //   })
+      // })
+      // }
+
+      // this.logis.images = this.imageBLOBpath;
+      console.log('plus 1', this.imageBLOB);
+
+    } else {
+      console.log('ne peut pas continuer');
+
+    }
+
     this.db.collection('logis').add(this.data).then(()=>{
       this.load.dismiss();
       console.log('added');
@@ -203,6 +229,8 @@ export class PublicationPage implements OnInit {
           var x = base64.substr(13, base64.length);
           x = "data:image/jpeg;base64" + x;
           const blob = this.dataURLtoBlob(x);
+
+          this.imageBLOB.push(blob);
 
           // const imageFile = this.blobToFile(blob, "imProduit");
           const imageFile = this.blobToFile(blob, "imProduit" + imageName);

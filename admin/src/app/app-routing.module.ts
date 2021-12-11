@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'retirees',
     loadChildren: () => import('./retirees/retirees.module').then( m => m.RetireesPageModule)
+  },
+  {
+    path: 'creater',
+    loadChildren: () => import('./creater/creater.module').then( m => m.CreaterPageModule)
   }
 ];
 
