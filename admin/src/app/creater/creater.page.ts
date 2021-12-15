@@ -21,12 +21,21 @@ export class CreaterPage implements OnInit {
   quartName: any;
   servName: any;
   commoName: any;
+  listeCat: any;
+  listeQuart: any;
+  listeServ: any;
+  listeCommo: any;
 
   constructor(
     private db: AngularFirestore,
     private load: LoadingController,
     private alert: AlertController,
-  ) { }
+  ) {
+    this.getCategorie();
+    this.getCommo();
+    this.getServi();
+    this.getQuart();
+  }
 
   seeCat() {
     this.categorie = !this.categorie;
@@ -55,6 +64,12 @@ export class CreaterPage implements OnInit {
     this.catName = '';
   }
 
+  getCategorie() {
+    this.db.collection('categorie').valueChanges(['added', 'modified', 'removed']).subscribe((res) => {
+      this.listeCat = res;
+    });
+  }
+
   seeQuart() {
     this.quartier = !this.quartier;
   }
@@ -67,6 +82,12 @@ export class CreaterPage implements OnInit {
     console.log(this.quartName);
     this.quartInput = false;
     this.quartName = '';
+  }
+
+  getQuart() {
+    this.db.collection('quartier').valueChanges(['added', 'modified', 'removed']).subscribe((res) => {
+      this.listeQuart = res;
+    });
   }
 
   seeServi() {
@@ -83,6 +104,12 @@ export class CreaterPage implements OnInit {
     this.servName = '';
   }
 
+  getServi() {
+    this.db.collection('service').valueChanges(['added', 'modified', 'removed']).subscribe((res) => {
+      this.listeServ = res;
+    });
+  }
+
   seeCommo() {
     this.commodite = !this.commodite;
   }
@@ -95,6 +122,12 @@ export class CreaterPage implements OnInit {
     console.log(this.commoName);
     this.commoInput = false;
     this.commoName = '';
+  }
+
+  getCommo() {
+    this.db.collection('commodites').valueChanges(['added', 'modified', 'removed']).subscribe((res) => {
+      this.listeCommo = res;
+    });
   }
 
   ngOnInit() {

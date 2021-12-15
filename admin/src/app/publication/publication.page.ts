@@ -18,48 +18,12 @@ export class PublicationPage implements OnInit {
   data: any;
   imageBLOB: any[] = [];
   imageBLOBpath: any[] = [];
-  logis: Logis = new Logis;
-  local: any[] = [
-    {
-      type: 'Appartement Meublé'
-    },
-    {
-      type: 'Appartement Non Meublé'
-    },
-    {
-      type: 'Villa'
-    },
-    {
-      type: 'Magasin'
-    }
-  ];
-  quartiers: any[] = [
-    {
-      name: 'Kalaban coro'
-    },
-    {
-      name: 'Kalaban coura'
-    },
-    {
-      name: 'Golf'
-    },
-    {
-      name: 'Faladie'
-    },
-    {
-      name: 'Niamanan'
-    },
-  ];
-  commodites = [
-    { val: 'Climatisation', isChecked: false },
-    { val: 'Televiseur', isChecked: false },
-    { val: 'Refrigirateur', isChecked: false }
-  ];
-  service = [
-    { val: 'Securite', isChecked: false },
-    { val: 'Netoyage', isChecked: false },
-    { val: 'Parking', isChecked: false }
-  ];
+  // logis: Logis = new Logis;
+  logis: any;
+  local: any[];
+  quartiers: any[];
+  commodites: any;
+  service: any;
   imageArray: any[] = [];
 
   constructor(
@@ -70,7 +34,62 @@ export class PublicationPage implements OnInit {
     private imagePicker: ImagePicker,
     private base64: Base64,
     private afsg: AngularFireStorage
-    ) { }
+    ) {
+      this.initialisation();
+      this.getCategorie();
+      this.getCommo();
+      this.getServi();
+      this.getQuart();
+    }
+
+    initialisation() {
+      this.logis = {
+        type: null,
+        titre: null,
+        nombreChambre: null,
+        nombreSallon: null,
+        quartier: null,
+        prix: null,
+        formeOffre: null,
+        commodites: null,
+        commoditesTab: null,
+        service: null,
+        serviceTab: null,
+        description: null,
+        condition: null,
+        images: null,
+        numeroAgentImmobilier: null,
+        numeroAgentLogis: null,
+        longueur: null,
+        largeur: null,
+        numeroRef: null,
+        retiree: false
+      }
+    }
+
+    getCategorie() {
+      this.db.collection('categorie').valueChanges(['added', 'modified', 'removed']).subscribe((res) => {
+        this.local = res;
+      });
+    }
+
+    getQuart() {
+      this.db.collection('quartier').valueChanges(['added', 'modified', 'removed']).subscribe((res) => {
+        this.quartiers = res;
+      });
+    }
+
+    getServi() {
+      this.db.collection('service').valueChanges(['added', 'modified', 'removed']).subscribe((res) => {
+        this.service = res;
+      });
+    }
+
+    getCommo() {
+      this.db.collection('commodites').valueChanges(['added', 'modified', 'removed']).subscribe((res) => {
+        this.commodites = res;
+      });
+    }
 
   choisirCommode() {
     let commode ='';
@@ -104,42 +123,122 @@ export class PublicationPage implements OnInit {
     localStorage.setItem('stok', JSON.stringify(this.logis));
   }
 
+  makeFileName(i): string {
+    return  'image/' + i + new Date().getTime() + '.jpg';
+  }
   publier() {
-    let name = 'image/'+ new Date().getTime() + '.jpg';
-    this.presentLoading();
-    this.liaison();
-    this.data=JSON.parse(localStorage.getItem('stok'));
+    console.log("logis", this.logis);
+    // let counter: number = 0;
 
-    //storage
-    if (this.imageBLOB.length > 0) {
-      // for (let i = 0; i < this.imageBLOB.length; i++) {
-      //   this.afsg.ref(name).put(this.imageBLOB[i]).then(()=> {
-      //     this.afsg.ref(name).getDownloadURL().subscribe((pathImg) => {
-      //       this.imageBLOBpath.push({
-      //         path: pathImg
-      //       });
-      //   })
-      // })
-      // }
+    // this.presentLoading();
+    // this.liaison();
 
-      // this.logis.images = this.imageBLOBpath;
-      console.log('plus 1', this.imageBLOB);
 
-    } else {
-      console.log('ne peut pas continuer');
+    // if (this.imageBLOB.length > 0) {
+    //   for (let i = 0; i < this.imageBLOB.length; i++) {
+    //     let fileName = this.makeFileName(i);
+    //     this.afsg.ref(fileName).put(this.imageBLOB[i]).then(()=> {
+    //       counter++;
+    //       console.log("iteration",fileName);
+    //       this.afsg.ref(fileName).getDownloadURL().subscribe((pathImg) => {
+    //         this.imageBLOBpath.push({
+    //           path: pathImg
+    //         });
+    //         console.log("upload done i", fileName);
 
+    //         if (counter == this.imageBLOBpath.length) {
+    //           console.log("save done", this.imageBLOBpath);
+    //           this.saveLogis(this.imageBLOBpath, this.logis);
+    //         } else
+    //           console.log("not save yet", this.imageBLOBpath);
+    //     });
+    //   });
+    //   }
+
+    //   console.log('plus 1', this.imageBLOB);
+
+    // } else {
+    //   console.log('ne peut pas continuer');
+
+    // }
+    //
+    //
+    // console.log('logis',this.data);
+  }
+
+  saveLogis(imageBLOBpath, data: Logis) {
+
+    data.images = imageBLOBpath;
+    this.db.collection('logis').add(
+      {
+      type: this.logis.type,
+      titre: this.logis.titre,
+      nombreChambre: this.logis.nombreChambre,
+      nombreSallon: this.logis.nombreSallon,
+      quartier: this.logis.quartier,
+      prix: this.logis.prix,
+      formeOffre: this.logis.formeOffre,
+      commodites: this.logis.commodites,
+      commoditesTab: this.logis.commoditesTab,
+      service: this.logis.service,
+      serviceTab: this.logis.serviceTab,
+      description: this.logis.description,
+      condition: this.logis.condition,
+      images: imageBLOBpath,
+      numeroAgentImmobilier: this.logis.numeroAgentImmobilier,
+      numeroAgentLogis: this.logis.numeroAgentLogis,
+      longueur: this.logis.longueur,
+      largeur: this.logis.largeur,
+      numeroRef: this.logis.numeroRef,
+      retiree:  false
     }
-
-    this.db.collection('logis').add(this.data).then(()=>{
+    ).then(()=>{
       this.load.dismiss();
       console.log('added');
       this.presentAlert();
-      }, (error) => {
-        this.close();
-        alert(error);
+    }, (error) => {
+      this.close();
+      alert(error);
     });
-    console.log('logis',this.data);
   }
+  // publier() {
+  //   let name = 'image/'+ new Date().getTime() + '.jpg';
+  //   this.presentLoading();
+
+  //   this.data=JSON.parse(localStorage.getItem('stok'));
+
+  //   ---------------------------
+  //   storage
+  //   if (this.imageBLOB.length > 0) {
+  //     for (let i = 0; i < this.imageBLOB.length; i++) {
+  //       this.afsg.ref(name).put(this.imageBLOB[i]).then(()=> {
+  //         this.afsg.ref(name).getDownloadURL().subscribe((pathImg) => {
+  //           this.imageBLOBpath.push({
+  //             path: pathImg
+  //           });
+  //       })
+  //     })
+  //     }
+
+  //     this.logis.images = this.imageBLOBpath;
+  //     console.log('plus 1', this.imageBLOB);
+
+  //   } else {
+  //     console.log('ne peut pas continuer');
+
+  //   }
+  //   -----------------------------------
+  //   this.db.collection('logis').add(this.data).then(()=>{
+  //     this.load.dismiss();
+  //     console.log('added');
+  //     this.presentAlert();
+  //     }, (error) => {
+  //       this.close();
+  //       alert(error);
+  //   });
+  //   console.log('logis',this.data);
+  // }
+
 
   ngOnInit() {
   }
