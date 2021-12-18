@@ -25,6 +25,7 @@ export class PublicationPage implements OnInit {
   commodites: any;
   service: any;
   imageArray: any[] = [];
+  private counter: Number = 0;
 
   constructor(
     private db: AngularFirestore,
@@ -128,98 +129,99 @@ export class PublicationPage implements OnInit {
   }
   publier() {
     console.log("logis", this.logis);
-    this.db.collection('logis').add(
-      {
-      type: this.logis.type,
-      titre: this.logis.titre,
-      nombreChambre: this.logis.nombreChambre,
-      nombreSallon: this.logis.nombreSallon,
-      quartier: this.logis.quartier,
-      prix: this.logis.prix,
-      formeOffre: this.logis.formeOffre,
-      commodites: this.logis.commodites,
-      commoditesTab: this.logis.commoditesTab,
-      service: this.logis.service,
-      serviceTab: this.logis.serviceTab,
-      description: this.logis.description,
-      condition: this.logis.condition,
-      // images: imageBLOBpath,
-      numeroAgentImmobilier: this.logis.numeroAgentImmobilier,
-      numeroAgentLogis: this.logis.numeroAgentLogis,
-      longueur: this.logis.longueur,
-      largeur: this.logis.largeur,
-      numeroRef: this.ref.getTime(),
-      retiree:  false
-    }
-    ).then(()=>{
-      this.load.dismiss();
-      console.log('added');
-      this.presentAlert();
-    }, (error) => {
-      this.close();
-      alert(error);
-    });
+    // this.db.collection('logis').add(
+    //   {
+    //   type: this.logis.type,
+    //   titre: this.logis.titre,
+    //   nombreChambre: this.logis.nombreChambre,
+    //   nombreSallon: this.logis.nombreSallon,
+    //   quartier: this.logis.quartier,
+    //   prix: this.logis.prix,
+    //   formeOffre: this.logis.formeOffre,
+    //   commodites: this.logis.commodites,
+    //   commoditesTab: this.logis.commoditesTab,
+    //   service: this.logis.service,
+    //   serviceTab: this.logis.serviceTab,
+    //   description: this.logis.description,
+    //   condition: this.logis.condition,
+    //   // images: imageBLOBpath,
+    //   numeroAgentImmobilier: this.logis.numeroAgentImmobilier,
+    //   numeroAgentLogis: this.logis.numeroAgentLogis,
+    //   longueur: this.logis.longueur,
+    //   largeur: this.logis.largeur,
+    //   numeroRef: this.ref.getTime(),
+    //   retiree:  false
+    // }
+    // ).then(()=>{
+    //   this.load.dismiss();
+    //   console.log('added');
+    //   this.presentAlert();
+    // }, (error) => {
+    //   this.close();
+    //   alert(error);
+    // });
     // let counter: number = 0;
 
     // this.presentLoading();
     // this.liaison();
 
+    let counter: number = 0;
 
-    // if (this.imageBLOB.length > 0) {
-    //   for (let i = 0; i < this.imageBLOB.length; i++) {
-    //     let fileName = this.makeFileName(i);
-    //     this.afsg.ref(fileName).put(this.imageBLOB[i]).then(()=> {
-    //       counter++;
-    //       console.log("iteration",fileName);
-    //       this.afsg.ref(fileName).getDownloadURL().subscribe((pathImg) => {
-    //         this.imageBLOBpath.push({
-    //           path: pathImg
-    //         });
-    //         console.log("upload done i", fileName);
+    if (this.imageBLOB.length > 0) {
+      for (let i = 0; i < this.imageBLOB.length; i++) {
+        let fileName = this.makeFileName(i);
+        this.afsg.ref(fileName).put(this.imageBLOB[i]).then(()=> {
+          counter++;
+          console.log("iteration",fileName);
+          this.afsg.ref(fileName).getDownloadURL().subscribe((pathImg) => {
+            this.imageBLOBpath.push({
+              path: pathImg
+            });
+            console.log("upload done i", fileName);
 
-    //         if (counter == this.imageBLOBpath.length) {
-    //           console.log("save done", this.imageBLOBpath);
-    //           this.saveLogis(this.imageBLOBpath, this.logis);
-    //         } else
-    //           console.log("not save yet", this.imageBLOBpath);
-    //     });
-    //   });
-    //   }
+            if (counter == this.imageBLOBpath.length) {
+              console.log("save done", this.imageBLOBpath);
+              this.saveLogis(this.imageBLOBpath, this.logis);
+            } else
+              console.log("not save yet", this.imageBLOBpath);
+        });
+      });
+      }
 
-    //   console.log('plus 1', this.imageBLOB);
+      console.log('plus 1', this.imageBLOB);
 
-    // } else {
-    //   console.log('ne peut pas continuer');
+    } else {
+      console.log('ne peut pas continuer');
 
-    // }
-    //
-    //
-    // console.log('logis',this.data);
+    }
+
+
+    console.log('logis',this.data);
   }
 
   saveLogis(imageBLOBpath, data: Logis) {
 
-    data.images = imageBLOBpath;
+    // data.images = imageBLOBpath;
     this.db.collection('logis').add(
       {
-      type: this.logis.type,
-      titre: this.logis.titre,
-      nombreChambre: this.logis.nombreChambre,
-      nombreSallon: this.logis.nombreSallon,
-      quartier: this.logis.quartier,
-      prix: this.logis.prix,
-      formeOffre: this.logis.formeOffre,
-      commodites: this.logis.commodites,
-      commoditesTab: this.logis.commoditesTab,
-      service: this.logis.service,
-      serviceTab: this.logis.serviceTab,
-      description: this.logis.description,
-      condition: this.logis.condition,
+      type: data.type,
+      titre: data.titre,
+      nombreChambre: data.nombreChambre,
+      nombreSallon: data.nombreSallon,
+      quartier: data.quartier,
+      prix: data.prix,
+      formeOffre: data.formeOffre,
+      commodites: data.commodites,
+      commoditesTab: data.commoditesTab,
+      service: data.service,
+      serviceTab: data.serviceTab,
+      description: data.description,
+      condition: data.condition,
       images: imageBLOBpath,
-      numeroAgentImmobilier: this.logis.numeroAgentImmobilier,
-      numeroAgentLogis: this.logis.numeroAgentLogis,
-      longueur: this.logis.longueur,
-      largeur: this.logis.largeur,
+      numeroAgentImmobilier: data.numeroAgentImmobilier,
+      numeroAgentLogis: data.numeroAgentLogis,
+      longueur: data.longueur,
+      largeur: data.largeur,
       numeroRef: this.ref.getTime(),
       retiree:  false
     }

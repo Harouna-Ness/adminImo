@@ -12,7 +12,7 @@ export class Logis {
   serviceTab?: any;
   description: string;
   condition: string;
-  images: any[];
+  images: any[] = [];
   numeroAgentImmobilier: string;
   numeroAgentLogis: string;
   longueur?: any;

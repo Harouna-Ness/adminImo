@@ -109,7 +109,7 @@
 
       <ion-item *ngFor="let commode of commodites">
         <ion-label>{{commode.val}}</ion-label>
-        <ion-checkbox slot="end" [(ngModel)]="commode.isChecked"></ion-checkbox>
+        <ion-checkbox (ionChange)="getCcomoditeValue($event, commode)" slot="end" [(ngModel)]="commode.isChecked"></ion-checkbox>
       </ion-item>
 
       <ion-item-divider color='primary'>Service</ion-item-divider>

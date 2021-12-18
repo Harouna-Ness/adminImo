@@ -30,8 +30,7 @@
         <ion-card [ngClass]="{'ion-card': !annonce.retiree, 'ion-card1': annonce.retiree}" mode="ios">
           <ion-row>
             <ion-col size="12">
-              <img src='/assets/imo2.jpg'>
-
+              <img *ngIf="(annonce.images) && (annonce.images.length > 0)" [src]='annonce.images[0]?.path'>
             </ion-col>
 
             <ion-col class="lateral" size="12">
