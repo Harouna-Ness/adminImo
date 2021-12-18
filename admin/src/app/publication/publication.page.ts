@@ -68,8 +68,9 @@ export class PublicationPage implements OnInit {
     }
 
     getCategorie() {
-      this.db.collection('categorie').valueChanges(['added', 'modified', 'removed']).subscribe((res) => {
+      this.db.collection('categorie').valueChanges({idField: 'id'}).subscribe((res) => {
         this.local = res;
+        console.log('cat', this.local)
       });
     }
 
@@ -86,7 +87,7 @@ export class PublicationPage implements OnInit {
     }
 
     getCommo() {
-      this.db.collection('commodites').valueChanges(['added', 'modified', 'removed']).subscribe((res) => {
+      this.db.collection('commodites').valueChanges({idField: 'id'}).subscribe((res) => {
         this.commodites = res;
       });
     }
@@ -114,7 +115,6 @@ export class PublicationPage implements OnInit {
     }
     this.logis.serviceTab=this.service;
     this.logis.service=servi;
-    this.logis.numeroRef=this.ref.getTime();
   }
 
   liaison() {
@@ -128,6 +128,37 @@ export class PublicationPage implements OnInit {
   }
   publier() {
     console.log("logis", this.logis);
+    this.db.collection('logis').add(
+      {
+      type: this.logis.type,
+      titre: this.logis.titre,
+      nombreChambre: this.logis.nombreChambre,
+      nombreSallon: this.logis.nombreSallon,
+      quartier: this.logis.quartier,
+      prix: this.logis.prix,
+      formeOffre: this.logis.formeOffre,
+      commodites: this.logis.commodites,
+      commoditesTab: this.logis.commoditesTab,
+      service: this.logis.service,
+      serviceTab: this.logis.serviceTab,
+      description: this.logis.description,
+      condition: this.logis.condition,
+      // images: imageBLOBpath,
+      numeroAgentImmobilier: this.logis.numeroAgentImmobilier,
+      numeroAgentLogis: this.logis.numeroAgentLogis,
+      longueur: this.logis.longueur,
+      largeur: this.logis.largeur,
+      numeroRef: this.ref.getTime(),
+      retiree:  false
+    }
+    ).then(()=>{
+      this.load.dismiss();
+      console.log('added');
+      this.presentAlert();
+    }, (error) => {
+      this.close();
+      alert(error);
+    });
     // let counter: number = 0;
 
     // this.presentLoading();
@@ -189,7 +220,7 @@ export class PublicationPage implements OnInit {
       numeroAgentLogis: this.logis.numeroAgentLogis,
       longueur: this.logis.longueur,
       largeur: this.logis.largeur,
-      numeroRef: this.logis.numeroRef,
+      numeroRef: this.ref.getTime(),
       retiree:  false
     }
     ).then(()=>{
@@ -357,7 +388,13 @@ export class PublicationPage implements OnInit {
 
 
 
-  // importImages() {
-  //   this.imageArray.requestReadPermission()
-  // }
+  getCcomoditeValue(event: any, commodite) {
+    console.log("com", commodite)
+    console.log("ev", event)
+    if (commodite.isChecked == true) {
+      this.logis.commodites = commodite.val;
+    } else {
+      this.logis.commodites = null;
+    }
+  }
 }

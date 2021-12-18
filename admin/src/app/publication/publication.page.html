@@ -49,7 +49,7 @@
         </ion-item>
       </div>
 
-      <div class="appart" *ngIf="logis.type==='Villa'">
+      <div class="appart" *ngIf="logis.type==='Villa'||logis.type==='Appartement non meublé'||logis.type==='Appartement meublé'">
         <ion-item>
           <ion-label position='floating'>Nombre de chambre</ion-label>
           <ion-input [(ngModel)]="logis.nombreChambre" type="number"></ion-input>
@@ -121,19 +121,20 @@
     </div>
 
     <!-- champs à afficher s'il s'agit d'Appartement Meublé -->
-    <div *ngIf="logis.type==='Villa'">
+
+    <div *ngIf="logis.type==='Villa'||logis.type==='Appartement non meublé'||logis.type==='Appartement meublé'">
 
       <ion-item-divider color='primary'>Commodites</ion-item-divider>
 
       <ion-item *ngFor="let commode of commodites">
         <ion-label>{{commode.val}}</ion-label>
-        <ion-checkbox slot="end" [(ngModel)]="commode.isChecked"></ion-checkbox>
+        <ion-checkbox (ionChange)="choisirCommode()" slot="end" [(ngModel)]="commode.isChecked"></ion-checkbox>
       </ion-item>
 
       <ion-item-divider color='primary'>Service</ion-item-divider>
       <ion-item *ngFor="let service of service">
         <ion-label>{{service.val}}</ion-label>
-        <ion-checkbox slot="end" [(ngModel)]="service.isChecked"></ion-checkbox>
+        <ion-checkbox (ionChange)="choisirService()" slot="end" [(ngModel)]="service.isChecked"></ion-checkbox>
       </ion-item>
 
     </div>
